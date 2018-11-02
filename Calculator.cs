@@ -9,5 +9,14 @@ namespace TDDRealWorld
         {
             return numbers.Sum();
         }
+
+        virtual internal double Multiply(params double[] numbers)
+        {
+            double total = 1;
+            foreach (var number in numbers) {
+                total *= number;
+            }
+            return total; 
+        }
     }
 }

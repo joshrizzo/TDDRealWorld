@@ -27,5 +27,12 @@ namespace TDDRealWorld
             var result = target.Add(5, -3, 5);
             Assert.Equal(7, result);
         }
+
+        [Fact]
+        public void Multiple_5and3_shouldEqual15()
+        {
+            var result = target.Multiply(5, 3);
+            Assert.Equal(15, result);
+        }
     }
 }

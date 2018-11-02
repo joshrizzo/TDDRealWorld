@@ -10,14 +10,21 @@ namespace TDDRealWorld
         public Calculator Calculator { get; }
 
         public double Total { get {
-            var prices = Items.Select(item => item.Price).ToArray();
+            var prices = Items.Select(item => item.Price * item.Quantity).ToArray();
             return Calculator.Add(prices);
         } }
+
+        public object TotalWithTax { get {
+            return Calculator.Multiply(Total, Tax);
+        } }
+
+        public double Tax { get; set; }
 
         public ShoppingCart(Calculator calculator)
         {
             Items = new List<ShoppingCartItem>();
             Calculator = calculator;
+            Tax = 1.078;
         }
 
         internal void AddItem(ShoppingCartItem item)
