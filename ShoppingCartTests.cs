@@ -21,7 +21,7 @@ namespace TDDRealWorld
         {
             AddTestData();
             var result = target.Total;
-            Assert.Equal(new double[] { 24, 13 }, calculator.calledSumWith);
+            Assert.Equal(new double[] { 0, 0 }, calculator.calledSumWith);
         }
 
         [Fact]

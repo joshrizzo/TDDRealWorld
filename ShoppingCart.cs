@@ -9,14 +9,24 @@ namespace TDDRealWorld
         public List<ShoppingCartItem> Items { get; internal set; }
         public Calculator Calculator { get; }
 
-        public double Total { get {
-            var prices = Items.Select(item => item.Price * item.Quantity).ToArray();
-            return Calculator.Add(prices);
-        } }
+        public double Total
+        {
+            get
+            {
+                var prices = Items.Select(item =>
+                                Calculator.Multiply(item.Price, item.Quantity)
+                            ).ToArray();
+                return Calculator.Add(prices);
+            }
+        }
 
-        public object TotalWithTax { get {
-            return Calculator.Multiply(Total, Tax);
-        } }
+        public object TotalWithTax
+        {
+            get
+            {
+                return Calculator.Multiply(Total, Tax);
+            }
+        }
 
         public double Tax { get; set; }
 

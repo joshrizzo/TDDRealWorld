@@ -29,10 +29,17 @@ namespace TDDRealWorld
         }
 
         [Fact]
-        public void Multiple_5and3_shouldEqual15()
+        public void Multiply_5and3_shouldEqual15()
         {
             var result = target.Multiply(5, 3);
             Assert.Equal(15, result);
+        }
+
+        [Fact]
+        public void Multiply_5_44and3_11_shouldEqual16_92()
+        {
+            var result = target.Multiply(5.44, 3.11);
+            Assert.Equal(16.92, result);
         }
     }
 }
