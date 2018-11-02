@@ -7,14 +7,17 @@ namespace TDDRealWorld
     internal class ShoppingCart
     {
         public List<ShoppingCartItem> Items { get; internal set; }
+        public Calculator Calculator { get; }
+
         public double Total { get {
             var prices = Items.Select(item => item.Price).ToArray();
-            return new Calculator().Add(prices);
+            return Calculator.Add(prices);
         } }
 
-        public ShoppingCart()
+        public ShoppingCart(Calculator calculator)
         {
             Items = new List<ShoppingCartItem>();
+            Calculator = calculator;
         }
 
         internal void AddItem(ShoppingCartItem item)
