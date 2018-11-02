@@ -20,5 +20,12 @@ namespace TDDRealWorld
             var result = target.Add(5, -3);
             Assert.Equal(2, result);
         }
+
+        [Fact]
+        public void Add_5Minus3Plus5_shouldEqual7()
+        {
+            var result = target.Add(5, -3, 5);
+            Assert.Equal(7, result);
+        }
     }
 }
