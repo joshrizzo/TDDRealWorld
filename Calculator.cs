@@ -5,7 +5,7 @@ namespace TDDRealWorld
 {
     internal class Calculator
     {
-        internal int Add(params int[] numbers)
+        internal double Add(params double[] numbers)
         {
             return numbers.Sum();
         }
