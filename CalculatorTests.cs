@@ -41,5 +41,12 @@ namespace TDDRealWorld
             var result = target.Multiply(5.44, 3.11);
             Assert.Equal(16.92, result);
         }
+
+        [Fact]
+        public void Multiply_5_045and1_shouldEqual5_05()
+        {
+            var result = target.Multiply(5.045, 1);
+            Assert.Equal(5.05, result);
+        }
     }
 }

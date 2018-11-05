@@ -16,7 +16,7 @@ namespace TDDRealWorld
             foreach (var number in numbers) {
                 total *= number;
             }
-            return Math.Round(total, 2); 
+            return Math.Round(total, 2, MidpointRounding.AwayFromZero); 
         }
     }
 }
