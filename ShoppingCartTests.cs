@@ -1,13 +1,22 @@
 using System;
 using System.Collections.Generic;
+using Moq;
 using Xunit;
 
 namespace TDDRealWorld
 {
     public class ShoppingCartTests
     {
-        private static readonly FakeCalculator calculator = new FakeCalculator();
-        private ShoppingCart target = new ShoppingCart(calculator);
+        private Mock<Calculator> mockCalc;
+        private ShoppingCart target;
+
+        public ShoppingCartTests() {
+            mockCalc = new Mock<Calculator>();
+            mockCalc.Setup(_ => _.Add(It.IsAny<double[]>())).Returns(0);
+            mockCalc.Setup(_ => _.Multiply(It.IsAny<double[]>())).Returns(0);
+
+            target = new ShoppingCart(mockCalc.Object);
+        }
 
         [Fact]
         public void AddItem_2Items_shouldHave2Items()
@@ -21,7 +30,9 @@ namespace TDDRealWorld
         {
             AddTestData();
             var result = target.Total;
-            Assert.Equal(new double[] { 0, 0 }, calculator.calledSumWith);
+            mockCalc.Verify(_ => _.Multiply(12, 2));
+            mockCalc.Verify(_ => _.Multiply(13, 1));
+            mockCalc.Verify(_ => _.Add(0, 0));
         }
 
         [Fact]
@@ -29,9 +40,9 @@ namespace TDDRealWorld
         {
             AddTestData();
             var result = target.TotalWithTax;
-            Assert.Equal(2, calculator.calledMultiplyWith.Count);
-            Assert.Contains(new double[] { 12, 2, 0.078 }, calculator.calledMultiplyWith);
-            Assert.Contains(new double[] { 13, 1, 1 }, calculator.calledMultiplyWith);
+            mockCalc.Verify(_ => _.Multiply(12, 2, 0.078));
+            mockCalc.Verify(_ => _.Multiply(13, 1, 1));
+            mockCalc.Verify(_ => _.Add(0, 0));
         }
 
         private void AddTestData()
@@ -40,23 +51,6 @@ namespace TDDRealWorld
             var item2 = new ShoppingCartItem() { Price = 13, Quantity = 1, Taxable = false };
             target.AddItem(item1);
             target.AddItem(item2);
-        }
-    }
-
-    internal class FakeCalculator : Calculator
-    {
-        public double[] calledSumWith;
-        override internal double Add(params double[] numbers)
-        {
-            calledSumWith = numbers;
-            return 0;
-        }
-
-        public List<double[]> calledMultiplyWith = new List<double[]>();
-        override internal double Multiply(params double[] numbers)
-        {
-            calledMultiplyWith.Add(numbers);
-            return 0;
         }
     }
 }

@@ -3,14 +3,14 @@ using System.Linq;
 
 namespace TDDRealWorld
 {
-    internal class Calculator
+    public class Calculator
     {
-        virtual internal double Add(params double[] numbers)
+        virtual public double Add(params double[] numbers)
         {
             return numbers.Sum();
         }
 
-        virtual internal double Multiply(params double[] numbers)
+        virtual public double Multiply(params double[] numbers)
         {
             double total = 1;
             foreach (var number in numbers) {
