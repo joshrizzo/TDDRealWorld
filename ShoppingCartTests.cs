@@ -25,17 +25,19 @@ namespace TDDRealWorld
         }
 
         [Fact]
-        public void Total_with2Items_shouldCalculateTax()
+        public void Total_with2Items_shouldCalculateTaxOnApplicableItems()
         {
             AddTestData();
             var result = target.TotalWithTax;
-            Assert.Equal(new double[] { 0, 1.078 }, calculator.calledMultiplyWith);
+            Assert.Equal(2, calculator.calledMultiplyWith.Count);
+            Assert.Contains(new double[] { 12, 2, 0.078 }, calculator.calledMultiplyWith);
+            Assert.Contains(new double[] { 13, 1, 1 }, calculator.calledMultiplyWith);
         }
 
         private void AddTestData()
         {
-            var item1 = new ShoppingCartItem() { Price = 12, Quantity = 2 };
-            var item2 = new ShoppingCartItem() { Price = 13, Quantity = 1 };
+            var item1 = new ShoppingCartItem() { Price = 12, Quantity = 2, Taxable = true };
+            var item2 = new ShoppingCartItem() { Price = 13, Quantity = 1, Taxable = false };
             target.AddItem(item1);
             target.AddItem(item2);
         }
@@ -50,10 +52,10 @@ namespace TDDRealWorld
             return 0;
         }
 
-        public double[] calledMultiplyWith;
+        public List<double[]> calledMultiplyWith = new List<double[]>();
         override internal double Multiply(params double[] numbers)
         {
-            calledMultiplyWith = numbers;
+            calledMultiplyWith.Add(numbers);
             return 0;
         }
     }

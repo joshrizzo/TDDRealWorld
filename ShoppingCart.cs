@@ -24,7 +24,10 @@ namespace TDDRealWorld
         {
             get
             {
-                return Calculator.Multiply(Total, Tax);
+                var taxes = Items.Select(item => 
+                                Calculator.Multiply(item.Price, item.Quantity, item.Taxable ? Tax : 1)
+                            ).ToArray();
+                return Calculator.Add(taxes);
             }
         }
 
@@ -34,7 +37,7 @@ namespace TDDRealWorld
         {
             Items = new List<ShoppingCartItem>();
             Calculator = calculator;
-            Tax = 1.078;
+            Tax = 0.078;
         }
 
         internal void AddItem(ShoppingCartItem item)
